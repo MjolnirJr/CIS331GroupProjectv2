@@ -203,30 +203,115 @@ public class Application_FX extends Application
         overallPane.setPadding(new Insets(10, 0, 0, 0));
                 
         // Set up primary window
-        Scene primaryScene = new Scene(overallPane, 800, 500);
+        Scene primaryScene = new Scene(overallPane, 1050, 500);
         primaryStage.setTitle("ShenandoahU Student Management System");
         primaryStage.setScene(primaryScene);
         primaryStage.show();
 
         // Disable ComboBox 
-        lblAddInstruc2.setDisable(true);
         boxInstruc.setDisable(true);
         
         // If checkbox is pressed, enable ComboBox
         // If checkbox is unpressed, disable ComboBox
         cbNewInstruc.setOnAction(e -> 
         {
-            if(!cbNewInstruc.isSelected())
+            if(cbNewInstruc.isSelected())
             {
-                lblAddInstruc2.setDisable(true);
-                boxInstruc.setDisable(true);               
+                boxInstruc.setDisable(false);  
             }
-            else
+            else 
             {
-                lblAddInstruc2.setDisable(false);
-                boxInstruc.setDisable(false);                  
-            }            
+                boxInstruc.setDisable(true);
+            }             
         });
+        
+         // Lambda Event for adding new Student
+        btnAddStu.setOnAction(e -> 
+        {
+           updateStuComboBox();
+        });
+        
+        // Lambda Event for adding new Course
+        btnAddCourse.setOnAction(e -> 
+        {
+            updateCourseComboBox();
+        });
+        
+        // Lambda Event for adding new Instructor
+        btnAddInstruc.setOnAction(e -> 
+        {
+            updateInstrucComboBox();
+        });
+        
+        // Lambda Event to display updated course
+        btnUpdtCourse.setOnAction(e -> 
+        {
+            printInfo();
+        });
+        
+    }
+    
+    public void updateStuComboBox()
+    {
+        //update student combobox
+        //get index for student year combobox
+        int selectedIndex = boxStuYear.getSelectionModel().getSelectedIndex();
+        double convertGPA = Double.valueOf(txtStuGPA.getText());
+        Student tempStu = new Student(txtStuName.getText(), selectedIndex, 
+                txtStuMajor.getText(), convertGPA, txtStuMail.getText());
+        studentArray.add(tempStu);
+        olStu.add(tempStu.getName());
+        txtStuName.clear();
+        boxStuYear.getSelectionModel().clearSelection();
+        txtStuMajor.clear();
+        txtStuGPA.clear();
+        txtStuMail.clear();
+    }
+    
+    public void updateCourseComboBox()
+    {
+        //update course combobox
+        String stringBuilding = boxBuilding.getSelectionModel().toString(); //needs some reworking
+        int maxCap = Integer.valueOf(txtMaxCap.getText());
+        Course tempCourse = new Course(txtCourseName.getText(), stringBuilding,
+                txtRoom.getText(), maxCap);
+        courseArray.add(tempCourse);
+        olCourse.add(tempCourse.getCourseName());
+        txtCourseName.clear();
+        boxBuilding.getSelectionModel().clearSelection();
+        txtRoom.clear();
+        txtMaxCap.clear();
+    }
+    
+    public void updateInstrucComboBox()
+    {
+        //update instructor combobox
+        String stringPre = boxPrefix.getSelectionModel().toString(); //needs some reworking
+        Instructor tempInstruc = new Instructor(txtInstrucName.getText(), stringPre,
+                txtOffice.getText(), txtDepartment.getText(), txtInstrucMail.getText());
+        instructorArray.add(tempInstruc);
+        olInstruc.add(tempInstruc.getTitle());
+        txtInstrucName.clear();
+        boxPrefix.getSelectionModel().clearSelection();
+        txtOffice.clear();
+        txtDepartment.clear();
+        txtInstrucMail.clear();
+    }
+    
+    public void printInfo()
+    {
+        int selectIndex = boxCourse.getSelectionModel().getSelectedIndex();
+        Course tempCourseRef = courseArray.get(selectIndex);
+        
+        txtOut.appendText(tempCourseRef.toString() + "\n\n");
+        
+        for (Student stu: studentArray)
+        {
+            txtOut.appendText(stu.toString());
+        }
+        
+        
+       
     }
 
     /**
