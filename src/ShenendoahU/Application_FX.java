@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*; 
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.geometry.Insets;
 
 // For Arraylist and Oracle DB
 import java.sql.*;
@@ -124,8 +125,9 @@ public class Application_FX extends Application
         GridPane overallPane = new GridPane();
         
         // Add controls to Student Pane
-        addStuPane.setAlignment(Pos.CENTER);
-        addStuPane.add(lblAddStu, 0, 0);
+        addStuPane.setAlignment(Pos.TOP_CENTER);
+        addStuPane.getColumnConstraints().add(new ColumnConstraints(50));
+        addStuPane.add(lblAddStu, 0,0,2,1);
         addStuPane.add(lblStuName, 0, 1);
         addStuPane.add(lblStuYear, 0, 2);
         addStuPane.add(lblStuMajor, 0, 3);
@@ -137,10 +139,12 @@ public class Application_FX extends Application
         addStuPane.add(txtStuGPA, 1, 4);
         addStuPane.add(txtStuMail, 1, 5);
         addStuPane.add(btnAddStu, 1, 6);
+        addStuPane.setPadding(new Insets(10));
         
         // Add controls to Course Pane
-        addCoursePane.setAlignment(Pos.CENTER);
-        addCoursePane.add(lblAddCourse, 0, 0);
+        addCoursePane.setAlignment(Pos.TOP_CENTER);
+        addCoursePane.getColumnConstraints().add(new ColumnConstraints(85));
+        addCoursePane.add(lblAddCourse, 0, 0, 2, 1);
         addCoursePane.add(lblCourseName, 0, 1);
         addCoursePane.add(lblBuilding, 0, 2);
         addCoursePane.add(lblRoom, 0, 3);
@@ -150,10 +154,12 @@ public class Application_FX extends Application
         addCoursePane.add(txtRoom, 1, 3);
         addCoursePane.add(txtMaxCap, 1, 4);
         addCoursePane.add(btnAddCourse, 1, 5);
+        addCoursePane.setPadding(new Insets(10));
         
         // Add controls to Instructor Pane
-        addInstrucPane.setAlignment(Pos.CENTER);
-        addInstrucPane.add(lblAddInstruc, 0, 0);
+        addInstrucPane.setAlignment(Pos.TOP_CENTER);
+        addCoursePane.getColumnConstraints().add(new ColumnConstraints(100));
+        addInstrucPane.add(lblAddInstruc, 0, 0, 2, 1);
         addInstrucPane.add(lblInstrucName, 0, 1);
         addInstrucPane.add(lblPrefix, 0, 2);
         addInstrucPane.add(lblOffice, 0, 3);
@@ -165,33 +171,37 @@ public class Application_FX extends Application
         addInstrucPane.add(txtDepartment, 1, 4);
         addInstrucPane.add(txtInstrucMail, 1, 5);
         addInstrucPane.add(btnAddInstruc, 1, 6);
+        addInstrucPane.setPadding(new Insets(10));
         
         // Add controls to Build Course Pane
-        buildCoursePane.setAlignment(Pos.CENTER);
-        buildCoursePane.add(lblBuildCourse, 0, 0);
+        buildCoursePane.setAlignment(Pos.CENTER_LEFT);
+        buildCoursePane.getColumnConstraints().add(new ColumnConstraints(75));
+        buildCoursePane.add(lblBuildCourse, 0, 0, 2, 1);
         buildCoursePane.add(lblAddStu2, 0, 1);
         buildCoursePane.add(lblToCourse, 0, 2);
-        buildCoursePane.add(cbNewInstruc, 0, 3);
+        buildCoursePane.add(cbNewInstruc, 0, 3, 2, 1);
         buildCoursePane.add(lblAddInstruc2, 0, 4);
         buildCoursePane.add(boxStu, 1, 1);
         buildCoursePane.add(boxCourse, 1, 2);
         buildCoursePane.add(boxInstruc, 1, 4);
-        buildCoursePane.add(btnUpdtCourse, 1, 5);
+        buildCoursePane.add(btnUpdtCourse, 0, 5, 2, 1);
+        buildCoursePane.setVgap(5);
+        buildCoursePane.setPadding(new Insets(10));
         
         // Add output textbox to Table Pane
         tablePane.setAlignment(Pos.CENTER);
         tablePane.add(txtOut, 0, 0);
+        tablePane.setPadding(new Insets(10, 10, 10, 10));
         
         // Format panes into Overall Pane
         overallPane.setAlignment(Pos.CENTER);
-        overallPane.add(addStuPane, 0, 0);
-        overallPane.add(addCoursePane, 1, 0);
-        overallPane.add(addInstrucPane, 2, 0);
+        overallPane.add(addStuPane, 0, 0, 2, 1);
+        overallPane.add(addCoursePane, 2, 0);
+        overallPane.add(addInstrucPane, 3, 0);
         overallPane.add(buildCoursePane, 0, 1);
-        overallPane.add(tablePane, 1, 1);
-        overallPane.setVgap(25);
-        overallPane.setHgap(25);
-        
+        overallPane.add(tablePane, 1, 1, 3, 1);
+        overallPane.setPadding(new Insets(10, 0, 0, 0));
+                
         // Set up primary window
         Scene primaryScene = new Scene(overallPane, 800, 500);
         primaryStage.setTitle("ShenandoahU Student Management System");
