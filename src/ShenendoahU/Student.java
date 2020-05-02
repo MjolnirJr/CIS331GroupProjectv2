@@ -59,16 +59,16 @@ public class Student {
     
     public void setStudentYear(int year){
         switch(year){
-            case 1:
+            case 0:
                 this.studentYear = "Freshman";
                 break;
-            case 2:
+            case 1:
                 this.studentYear = "Sophomore";
                 break;
-            case 3:
+            case 2:
                 this.studentYear = "Junior";
                 break;
-            case 4:
+            case 3:
                 this.studentYear = "Senior";
                 break;
             default:
@@ -121,7 +121,7 @@ public class Student {
     
     public String getName(){
         // Returns Student FirstName and LastName as one formatted string
-        return String.format("%s %s",this.firstName,this.lastName);
+        return String.format("%s %s",this.lastName, this.firstName);
     }
     
     public int getStudentID(){
@@ -134,5 +134,12 @@ public class Student {
     
     public String getStudentMajor(){
         return this.studentMajor;
+    }
+  
+    //updated for javafx main class
+    public String toString(){
+        return String.format("Student ID #: %-10s " + this.getName() + 
+                " Major: " + this.studentMajor + " Year: " + this.studentYear, 
+                this.studentID);
     }
 }
