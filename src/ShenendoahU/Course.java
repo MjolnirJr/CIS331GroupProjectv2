@@ -100,6 +100,12 @@ public class Course {
     {
         this.courseName = courseName;
     }
+  
+    //used for applicationfx 
+    public String getCourseName()
+    {
+        return this.courseName;
+    }
     
     public int getCourseID()
     {
