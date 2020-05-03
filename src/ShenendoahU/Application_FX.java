@@ -255,47 +255,156 @@ public class Application_FX extends Application
     {
         //update student combobox
         //get index for student year combobox
-        int selectedIndex = boxStuYear.getSelectionModel().getSelectedIndex();
+        boolean execute = true;
         double convertGPA = Double.valueOf(txtStuGPA.getText());
-        Student tempStu = new Student(txtStuName.getText(), selectedIndex, 
-                txtStuMajor.getText(), convertGPA, txtStuMail.getText());
-        studentArray.add(tempStu);
-        olStu.add(tempStu.getName());
-        txtStuName.clear();
-        boxStuYear.getSelectionModel().clearSelection();
-        txtStuMajor.clear();
-        txtStuGPA.clear();
-        txtStuMail.clear();
+        if (txtStuName.getText().isEmpty())
+        {
+            txtStuName.clear();
+            txtOut.appendText("Please enter a name. \n");
+            execute = false;
+        }
+        if (boxStuYear.getSelectionModel().isEmpty())
+        {
+            boxStuYear.getSelectionModel().clearSelection();
+            txtOut.appendText("Please select a year. \n");
+            execute = false;
+        }
+        if (txtStuMajor.getText().isEmpty())
+        {
+            txtStuMajor.clear();
+            txtOut.appendText("Please enter a major. \n");
+            execute = false;
+        }
+        if (convertGPA < 0 || convertGPA > 5)
+        {
+            txtStuGPA.clear();
+            txtOut.appendText("Please enter a valid GPA between 0 and 5. \n");
+            execute = false;
+        }
+        if ((!txtStuMail.getText().contains("@")) && (!txtStuMail.getText().contains(".edu") ||
+                !txtStuMail.getText().contains(".com") || !txtStuMail.getText().contains(".net")
+                || !txtStuMail.getText().contains(".org")))
+        {
+            txtStuMail.clear();
+            txtOut.appendText("Please enter a valid email. \n");
+            execute = false;
+        }
+
+        //update student combobox
+        //get index for student year combobox
+        if (execute)
+        {
+            txtOut.clear();
+            int selectedIndex = boxStuYear.getSelectionModel().getSelectedIndex();
+            Student tempStu = new Student(txtStuName.getText(), selectedIndex, 
+                    txtStuMajor.getText(), convertGPA, txtStuMail.getText());
+            studentArray.add(tempStu);
+            olStu.add(tempStu.getName());
+            txtStuName.clear();
+            boxStuYear.getSelectionModel().clearSelection();
+            txtStuMajor.clear();
+            txtStuGPA.clear();
+            txtStuMail.clear();
+        }
     }
     
     public void updateCourseComboBox()
     {
         //update course combobox
-        String stringBuilding = boxBuilding.getSelectionModel().toString(); //needs some reworking
-        int maxCap = Integer.valueOf(txtMaxCap.getText());
-        Course tempCourse = new Course(txtCourseName.getText(), stringBuilding,
-                txtRoom.getText(), maxCap);
-        courseArray.add(tempCourse);
-        olCourse.add(tempCourse.getCourseName());
-        txtCourseName.clear();
-        boxBuilding.getSelectionModel().clearSelection();
-        txtRoom.clear();
-        txtMaxCap.clear();
+        boolean execute = true;
+        if (txtCourseName.getText().isEmpty())
+        {
+            txtCourseName.clear();
+            txtOut.appendText("Please enter a valid course. \n");
+            execute = false;
+        }
+        if (boxBuilding.getSelectionModel().isEmpty())
+        {
+            boxBuilding.getSelectionModel().clearSelection();
+            txtOut.appendText("Please select a building. \n");
+            execute = false;
+        }
+        if (txtRoom.getText().isEmpty())
+        {
+            txtRoom.clear();
+            txtOut.appendText("Please enter a valid room. \n");
+            execute = false;
+        }
+        if (txtMaxCap.getText().isEmpty())
+        {
+            txtMaxCap.clear();
+            txtOut.appendText("Please enter the maximum capacity. \n");
+            execute = false;
+        }
+
+        //update course combobox
+        if (execute)
+        {
+            txtOut.clear();
+            String stringBuilding = boxBuilding.getSelectionModel().toString(); //needs some reworking
+            int maxCap = Integer.valueOf(txtMaxCap.getText());
+            Course tempCourse = new Course(txtCourseName.getText(), stringBuilding,
+                    txtRoom.getText(), maxCap);
+            courseArray.add(tempCourse);
+            olCourse.add(tempCourse.getCourseName());
+            txtCourseName.clear();
+            boxBuilding.getSelectionModel().clearSelection();
+            txtRoom.clear();
+            txtMaxCap.clear();
+        }
     }
     
     public void updateInstrucComboBox()
     {
         //update instructor combobox
-        String stringPre = boxPrefix.getSelectionModel().toString(); //needs some reworking
-        Instructor tempInstruc = new Instructor(txtInstrucName.getText(), stringPre,
-                txtOffice.getText(), txtDepartment.getText(), txtInstrucMail.getText());
-        instructorArray.add(tempInstruc);
-        olInstruc.add(tempInstruc.getTitle());
-        txtInstrucName.clear();
-        boxPrefix.getSelectionModel().clearSelection();
-        txtOffice.clear();
-        txtDepartment.clear();
-        txtInstrucMail.clear();
+        boolean execute = true;
+        if (txtInstrucName.getText().isEmpty())
+        {    
+            txtInstrucName.clear();
+            txtOut.appendText("Please enter a valid name. \n");
+            execute = false;
+        }
+        if (boxPrefix.getSelectionModel().isEmpty())
+        {    
+            boxPrefix.getSelectionModel().clearSelection();
+            txtOut.appendText("Please select a prefix. \n");
+            execute = false;
+        }
+        if (txtOffice.getText().isEmpty())
+        {    
+            txtOffice.clear();
+            txtOut.appendText("Please enter a valid office. \n");
+            execute = false;
+        }
+        if (txtDepartment.getText().isEmpty())
+        {    
+            txtDepartment.clear();
+            txtOut.appendText("Please enter a valid department. \n");
+            execute = false;
+        }
+        if ((!txtInstrucMail.getText().contains("@")) && (!txtInstrucMail.getText().contains(".edu") ||
+                !txtInstrucMail.getText().contains(".com") || !txtInstrucMail.getText().contains(".net")
+                || !txtInstrucMail.getText().contains(".org")))
+        {
+            txtInstrucMail.clear();
+            txtOut.appendText("Please enter a valid email. \n");
+            execute = false;
+        }
+        
+        if (execute)
+        {
+            txtOut.clear();
+            String stringPre = boxPrefix.getSelectionModel().toString(); //needs some reworking
+            Instructor tempInstruc = new Instructor(txtInstrucName.getText(), stringPre,
+                    txtOffice.getText(), txtDepartment.getText(), txtInstrucMail.getText());
+            instructorArray.add(tempInstruc);
+            olInstruc.add(tempInstruc.getTitle());
+            txtInstrucName.clear();
+            boxPrefix.getSelectionModel().clearSelection();
+            txtOffice.clear();
+            txtDepartment.clear();
+            txtInstrucMail.clear();
+        }
     }
     
     public void printInfo()
