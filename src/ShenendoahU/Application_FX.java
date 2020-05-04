@@ -341,7 +341,7 @@ public class Application_FX extends Application
         if (execute)
         {
             txtOut.clear();
-            String stringBuilding = boxBuilding.getSelectionModel().toString(); //needs some reworking
+            String stringBuilding = (String) boxBuilding.getValue();
             int maxCap = Integer.valueOf(txtMaxCap.getText());
             Course tempCourse = new Course(txtCourseName.getText(), stringBuilding,
                     txtRoom.getText(), maxCap);
@@ -394,7 +394,8 @@ public class Application_FX extends Application
         if (execute)
         {
             txtOut.clear();
-            String stringPre = boxPrefix.getSelectionModel().toString(); //needs some reworking
+            String stringPre = (String) boxPrefix.getValue();
+            //String stringPre = boxPrefix.getSelectionModel().toString(); //needs some reworking
             Instructor tempInstruc = new Instructor(txtInstrucName.getText(), stringPre,
                     txtOffice.getText(), txtDepartment.getText(), txtInstrucMail.getText());
             instructorArray.add(tempInstruc);
