@@ -38,6 +38,17 @@ public class Student {
         nextStudentID++;        
     }   
     
+    public Student(int StudentID, String name, int year, String studentMajor, double GPA, 
+            String studentEmail){
+        setStudentName(name);
+        setStudentYear(year);
+        this.studentMajor = studentMajor;
+        this.GPA = GPA;
+        this.studentEmail = studentEmail;
+        this.studentID = studentID;
+        nextStudentID = this.studentID++;        
+    }
+    
     public Student(){
         this.studentID = nextStudentID;
         nextStudentID++;
@@ -121,7 +132,7 @@ public class Student {
     
     public String getName(){
         // Returns Student FirstName and LastName as one formatted string
-        return String.format("%s %s",this.lastName, this.firstName);
+        return String.format("%s %s",this.firstName, this.lastName);
     }
     
     public int getStudentID(){

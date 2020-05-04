@@ -52,6 +52,11 @@ public class Instructor {
         nextInstructID++;        
     }
     
+    public int getInsID()
+    {
+        return this.instructorID;
+    }
+    
     public void setName(String name)
     {
         this.name = name;
