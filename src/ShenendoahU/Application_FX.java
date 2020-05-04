@@ -188,7 +188,7 @@ public class Application_FX extends Application
         
         //-----Edit Course Pane Creation-----
         buildCoursePane.setAlignment(Pos.CENTER_LEFT);
-        buildCoursePane.getColumnConstraints().add(new ColumnConstraints(100));
+        buildCoursePane.getColumnConstraints().add(new ColumnConstraints(150));
         buildCoursePane.add(lblBuildCourse, 0, 0, 2, 1);
         buildCoursePane.add(rdoAddStu, 0, 1);
         buildCoursePane.add(rdoRemoveStu, 1, 1);
