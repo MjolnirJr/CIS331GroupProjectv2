@@ -105,6 +105,7 @@ public class Application_FX extends Application
     @Override
     public void start(Stage primaryStage) 
     {
+        //System.out.println("test\n");
         //Read exisiting students in from Database
         importStudents();
         
@@ -713,7 +714,7 @@ public class Application_FX extends Application
     //DBMS processing code written by Tran Le and Chris Torchia
     public void importStudents()
     {
-        String sqlQuery = "SELECT * FROM JAVAUSER.STUDENT";
+        String sqlQuery = "SELECT * FROM System.STUDENT";
         sendDBCommand(sqlQuery);
         
         String outputString = "";
@@ -739,7 +740,7 @@ public class Application_FX extends Application
         String query = "";
         for (Course course : courseArray)
         {
-            query = "INSERT INTO JAVAUSER.COURSE "
+            query = "INSERT INTO System.COURSE "
                     + "(COURSEID,COURSENAME,COURSEBLDG,COURSEROOM,COURSECAPACITY) VALUES (";
             query += course.getCourseID() + "," + "'" + course.getCourseName() + "'" + ",";
             query += "'" + course.getCourseBldg() + "'" + "," + "'" + course.getCourseRoom() + "'" + ",";
@@ -748,7 +749,7 @@ public class Application_FX extends Application
         }
         for (Student stu : studentArray)
         {
-            query = "INSERT INTO JAVAUSER.STUDENT "
+            query = "INSERT INTO System.STUDENT "
                     + "(STUDENTID,STUDENTNAME,STUDENTYEAR,STUDENTMAJOR,STUDENTGPA,STUDENTEMAIL) VALUES (";
             query += stu.getStudentID() + "," + "'" + stu.getName() + "'" + ",";
             query += stu.getStudentYearNumber()+ "," + "'" + stu.getStudentMajor() + "'" + ",";
@@ -757,7 +758,7 @@ public class Application_FX extends Application
         }
         for (Instructor ins : instructorArray)
         {
-            query = "INSERT INTO JAVAUSER.INSTRUCTOR "
+            query = "INSERT INTO System.INSTRUCTOR "
                     + "(INSTRID,INSTRNAME,INSTRPREFIX,INSTROFFICE,INSTRDEPT,INSTREMAIL) VALUES (";
             query += ins.getInsID() + "," + "'" + ins.getName() + "'" + ",";
             query += "'" + ins.getPrefix() + "'" + "," + "'" + ins.getOffice() + "'" + ",";
@@ -768,7 +769,7 @@ public class Application_FX extends Application
         {
             for(Student stu : course.getEnrollment())
             {
-                query = "INSERT INTO JAVAUSER.STUDENTENROLLMENT "
+                query = "INSERT INTO System.STUDENTENROLLMENT "
                     + "(COURSEID,STUDENTID) VALUES (";
                 query += course.getCourseID() + "," + stu.getStudentID() + ")";
                 sendDBCommand(query);
@@ -779,8 +780,8 @@ public class Application_FX extends Application
     public void sendDBCommand(String sqlQuery)
     {
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "javauser"; 
-        String userPASS = "javapass";
+        String userID = "System"; 
+        String userPASS = "ToM89451";
         OracleDataSource ds;
         
         //System.out.println(sqlQuery);
