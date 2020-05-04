@@ -11,7 +11,7 @@
                   handles string formatting for course information and roster printing purposes
  */
 
-// ******** Student class written by Vincent Hoang ************
+// ******** Course class written by Vincent Hoang ************
 package ShenendoahU;
 
 import java.util.ArrayList;
