@@ -281,9 +281,9 @@ public class Application_FX extends Application
             txtOut.appendText("Please enter a valid GPA between 0 and 5. \n");
             execute = false;
         }
-        if ((!txtStuMail.getText().contains("@")) && (!txtStuMail.getText().contains(".edu") ||
+        if (!txtStuMail.getText().contains("@") || !txtStuMail.getText().contains(".edu") ||
                 !txtStuMail.getText().contains(".com") || !txtStuMail.getText().contains(".net")
-                || !txtStuMail.getText().contains(".org")))
+                || !txtStuMail.getText().contains(".org"))
         {
             txtStuMail.clear();
             txtOut.appendText("Please enter a valid email. \n");
@@ -382,9 +382,9 @@ public class Application_FX extends Application
             txtOut.appendText("Please enter a valid department. \n");
             execute = false;
         }
-        if ((!txtInstrucMail.getText().contains("@")) && (!txtInstrucMail.getText().contains(".edu") ||
+        if (!txtInstrucMail.getText().contains("@") || !txtInstrucMail.getText().contains(".edu") ||
                 !txtInstrucMail.getText().contains(".com") || !txtInstrucMail.getText().contains(".net")
-                || !txtInstrucMail.getText().contains(".org")))
+                || !txtInstrucMail.getText().contains(".org"))
         {
             txtInstrucMail.clear();
             txtOut.appendText("Please enter a valid email. \n");
