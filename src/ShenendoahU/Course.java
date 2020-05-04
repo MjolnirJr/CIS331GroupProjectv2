@@ -57,6 +57,30 @@ public class Course {
             return false;
     }
     
+    //Attempts to add Student to course with checks to make sure there is room 
+    //and student is not already enrolled in the course
+    //Returns: 
+        //0 - Student was already enrolled
+        //1 - No Space for student in course
+        //2 - Student successfully enrolled
+    public int enrollStudentWithNewCheck(Student newStu)
+    {
+        for (Student stu : enrolledStudents)
+        {
+            if(stu.getStudentID() == newStu.getStudentID())
+            {
+                return 0;
+            }
+        }
+        if(enrolledStudents.size() < courseCapacity)
+        {
+            enrolledStudents.add(newStu);
+            return 2;
+        }
+        else
+            return 1;
+    }
+    
     public boolean removeStudent(int studentID)
     {
         //Iterator used to allow for removal of student from ArrayList while iterating through list

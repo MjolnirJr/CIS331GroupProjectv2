@@ -26,7 +26,7 @@ public class Student {
     private double GPA;
     private int studentID;
     private static int nextStudentID = 200000;
-        
+     
     public Student(String name, int year, String studentMajor, double GPA, 
             String studentEmail){
         setStudentName(name);

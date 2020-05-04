@@ -31,11 +31,11 @@ import javafx.geometry.Pos;
 public class Application_FX extends Application 
 {
     //Initialize Database Connection Objects    
-    Connection dbConn;
-    Statement commStmt;
-    ResultSet dbResults;
+    public static Connection dbConn;
+    public static Statement commStmt;
+    public static ResultSet dbResults;
     
-    //ArrayList initialization
+    //Lists initialization
     //ObservableList used for Building Course ComboBox controls
     public static ArrayList<Student> studentArray  = new ArrayList<>();
     public static ArrayList<Course> courseArray  = new ArrayList<>();
@@ -44,7 +44,7 @@ public class Application_FX extends Application
     public static ObservableList<Course> olCourse = FXCollections.observableArrayList();
     public static ObservableList<Instructor> olInstruc = FXCollections.observableArrayList();
 
-    //Controls for Student Pane
+    //Initalize Controls for Student Pane
     public Label lblAddStu = new Label("Add Student:");
     public Label lblStuName = new Label("Name: ");
     public Label lblStuYear = new Label("Year: ");
@@ -59,7 +59,7 @@ public class Application_FX extends Application
     public TextField txtStuMail = new TextField();
     
     
-    //Controls for Course Pane
+    //Initalize Controls for Course Pane
     public Label lblAddCourse = new Label("Add Course: ");
     public Label lblCourseName = new Label("Name: ");
     public Label lblBuilding = new Label("Building: ");
@@ -71,7 +71,7 @@ public class Application_FX extends Application
     public TextField txtRoom = new TextField();
     public TextField txtMaxCap = new TextField();
     
-    //Controls for Instructor Pane
+    //Initalize Controls for Instructor Pane
     public Label lblAddInstruc = new Label("Add Instructor: ");
     public Label lblInstrucName = new Label("Name: ");
     public Label lblPrefix = new Label("Prefix: ");
@@ -85,7 +85,7 @@ public class Application_FX extends Application
     public TextField txtDepartment = new TextField();
     public TextField txtInstrucMail = new TextField();
     
-    //Controls for Edit Course Pane
+    //Initalize Controls for Edit Course Pane
     public Label lblBuildCourse = new Label("Edit a Course: ");
     public Label lblAddStu2 = new Label("Choose Student: ");
     public Label lblToCourse = new Label("Choose Course: ");
@@ -105,6 +105,9 @@ public class Application_FX extends Application
     @Override
     public void start(Stage primaryStage) 
     {
+        //Read exisiting students in from Database
+        importStudents();
+        
         //Pre-populate ComboBox for Student, Course, Instructor
         boxStuYear.getItems().addAll(
             "Freshman",
@@ -133,7 +136,7 @@ public class Application_FX extends Application
         GridPane tablePane = new GridPane();
         GridPane overallPane = new GridPane();
         
-        // Add controls and formatting to Student Pane
+        //-----Add Student Pane Creation and Formatting-----
         addStuPane.setAlignment(Pos.TOP_CENTER);
         addStuPane.getColumnConstraints().add(new ColumnConstraints(50));
         addStuPane.add(lblAddStu, 0,0,2,1);
@@ -150,7 +153,7 @@ public class Application_FX extends Application
         addStuPane.add(btnAddStu, 1, 6);
         addStuPane.setPadding(new Insets(10));
         
-        // Add controls and formatting to Course Pane
+        //-----Add Course Pane Creation and Formatting-----
         addCoursePane.setAlignment(Pos.TOP_CENTER);
         addCoursePane.getColumnConstraints().add(new ColumnConstraints(85));
         addCoursePane.add(lblAddCourse, 0, 0, 2, 1);
@@ -165,7 +168,7 @@ public class Application_FX extends Application
         addCoursePane.add(btnAddCourse, 1, 5);
         addCoursePane.setPadding(new Insets(10));
         
-        // Add controls and formatting to Instructor Pane
+        //-----Add Instructor Pane Creation and Formatting-----
         addInstrucPane.setAlignment(Pos.TOP_CENTER);
         addCoursePane.getColumnConstraints().add(new ColumnConstraints(100));
         addInstrucPane.add(lblAddInstruc, 0, 0, 2, 1);
@@ -182,7 +185,7 @@ public class Application_FX extends Application
         addInstrucPane.add(btnAddInstruc, 1, 6);
         addInstrucPane.setPadding(new Insets(10));
         
-        // Add controls and formatting to Build Course Pane
+        //-----Edit Course Pane Creation-----
         buildCoursePane.setAlignment(Pos.CENTER_LEFT);
         buildCoursePane.getColumnConstraints().add(new ColumnConstraints(100));
         buildCoursePane.add(lblBuildCourse, 0, 0, 2, 1);
@@ -196,6 +199,8 @@ public class Application_FX extends Application
         buildCoursePane.add(boxCourse, 1, 3);
         buildCoursePane.add(boxInstruc, 1, 5);
         buildCoursePane.add(btnUpdtCourse, 0, 6, 2, 1);
+        
+        //-----Edit Course Pane Formatting-----
         buildCoursePane.setVgap(5);
         buildCoursePane.setPadding(new Insets(10));
         rdoAddStu.setToggleGroup(rdoGroupEditCourse);
@@ -204,24 +209,26 @@ public class Application_FX extends Application
         boxCourse.setPrefWidth(150);
         boxInstruc.setPrefWidth(150);       
         
-        // Add output textbox to Table Pane
+        //-----Table Pane Creation and Formatting-----
         tablePane.setAlignment(Pos.CENTER);
         tablePane.add(txtOut, 0, 0);
         ColumnConstraints tbcol1 = new ColumnConstraints();
         RowConstraints tbrow1 = new RowConstraints();
-        tbcol1.setHgrow(Priority.ALWAYS);
-        tbrow1.setVgrow(Priority.ALWAYS);
+        tbcol1.setHgrow(Priority.ALWAYS); //Forces textArea pane to fill all available horizontal space
+        tbrow1.setVgrow(Priority.ALWAYS); //Forces textArea pane to fill all available vertical space
         tablePane.getColumnConstraints().add(tbcol1);
         tablePane.getRowConstraints().add(tbrow1);
         tablePane.setPadding(new Insets(10, 10, 10, 10));
         
-        // Format panes into Overall Pane
+        //-----Overall Pane Creation-----
         overallPane.setAlignment(Pos.TOP_LEFT);
         overallPane.add(addStuPane, 0, 0, 2, 1);
         overallPane.add(addCoursePane, 2, 0);
         overallPane.add(addInstrucPane, 3, 0);
         overallPane.add(buildCoursePane, 4, 0);
         overallPane.add(tablePane, 0, 1, 5, 1);
+        
+        //-----Overall Pane Formatting-----
         overallPane.setPadding(new Insets(10, 0, 0, 0));
         ColumnConstraints col1 = new ColumnConstraints();
         ColumnConstraints col2 = new ColumnConstraints();
@@ -230,8 +237,8 @@ public class Application_FX extends Application
         ColumnConstraints col5 = new ColumnConstraints();
         RowConstraints row1 = new RowConstraints();
         RowConstraints row2 = new RowConstraints();
-        col5.setHgrow(Priority.ALWAYS);
-        row2.setVgrow(Priority.ALWAYS);
+        col5.setHgrow(Priority.ALWAYS); //Forces textArea pane to fill all available horizontal space
+        row2.setVgrow(Priority.ALWAYS); //Forces textArea pane to fill all available vertical space
         overallPane.getColumnConstraints().addAll(col1,col2,col3,col4,col5);
         overallPane.getRowConstraints().addAll(row1,row2);
         
@@ -243,14 +250,11 @@ public class Application_FX extends Application
         primaryStage.setScene(primaryScene);
         primaryStage.show();
         
-        //Import Students from Database
-        importStudents();
-        
         // Disable ComboBox 
         boxInstruc.setDisable(true);
         
-        // If checkbox is pressed, enable ComboBox
-        // If checkbox is unpressed, disable ComboBox
+        // If checkbox is pressed, enable Instructor ComboBox
+        // If checkbox is unpressed, disable Instructor ComboBox
         cbNewInstruc.setOnAction(e -> 
         {
             if(cbNewInstruc.isSelected())
@@ -285,11 +289,12 @@ public class Application_FX extends Application
         //Events change based on the selections of Add/Remove Student radio buttons and Add Instructor check box
         btnUpdtCourse.setOnAction(e -> 
         {
-            //First attempts to add instructor to a course, if instructor checkbox is selected
-            //Requires both a course and 
-            if(cbNewInstruc.isSelected())
+            //------Adding Instructor Without Changing Course Roster------
+            //First checks to see if "Add Instructor" is selected without a student being selected
+            //If so, it will attempt to add an instructor to a selected course without modifying a course's roster
+            if((cbNewInstruc.isSelected()) && (boxStu.getSelectionModel().isEmpty()))
             {
-                if((!boxInstruc.getSelectionModel().isEmpty())&&(!boxCourse.getSelectionModel().isEmpty()))
+                if((!boxInstruc.getSelectionModel().isEmpty())&& (!boxCourse.getSelectionModel().isEmpty()))
                 {
                     addInstructorToCourse();
                 }
@@ -299,197 +304,112 @@ public class Application_FX extends Application
                             + "Please Select a Course and Instructor to Continue%n"));
                 }
             }
-            if(rdoAddStu.isSelected())
+            else //------All Other Cases------
             {
-                if((!boxStu.getSelectionModel().isEmpty())&&(!boxCourse.getSelectionModel().isEmpty()))
+                if(cbNewInstruc.isSelected()) //Attempts to add instructor if "Add Instructor" is selected
                 {
-                    addStuToCourse();
-                }
-                else
-                {
-                    txtOut.appendText(String.format("%nCannot Add Student to Course - "
-                            + "Please Select a Course and Instructor to Continue %n"));
-                }
-                
-            }
-            else if(rdoRemoveStu.isSelected())
-            {
-                if((!boxStu.getSelectionModel().isEmpty())&&(!boxCourse.getSelectionModel().isEmpty()))
-                {
-                    if(cbNewInstruc.isSelected())
+                    if((!boxInstruc.getSelectionModel().isEmpty())&& (!boxCourse.getSelectionModel().isEmpty()))
                     {
                         addInstructorToCourse();
                     }
-                    removeStuFromCourse();
+                    else
+                    {
+                        txtOut.appendText(String.format("%nCannot Add Instructor to Course - "
+                                + "Please Select a Course and Instructor to Continue%n"));
+                    }
+                }
+                
+                //Checks to make sure that a course and student are both selected before attempting to modify roster
+                if((!boxStu.getSelectionModel().isEmpty())&&(!boxCourse.getSelectionModel().isEmpty()))
+                {
+                    if (rdoAddStu.isSelected()) //Attempts to add student if "Add Student" is selected
+                    {
+                        addStuToCourse();
+                    }
+                    else if(rdoRemoveStu.isSelected()) //Attempts to remove student if "Remove Student" is selected
+                    {
+                        removeStuFromCourse();
+                    }
                 }
                 else
                 {
-                    txtOut.appendText(String.format("%nCannot Remove Student from Course - "
-                            + "Please Select a Course and Instructor to Continue%n"));
+                    txtOut.appendText(String.format("%nPlease Select a Course and Instructor to Continue%n"));
                 }
             }
         });
         
-        //Cell factory code allowing for comboboxes to contain list of objects but only display the object names
+        //Lambda Expressions for Cell Factory Initialization allowing for comboboxes to 
+        //a contain list of objects but only display the object names
+        //List Cell classes defined below so that they could be used for both Cell Factory and Button Cells
         //***********Written By Chris Torchia***********
-        boxStu.setCellFactory(new Callback<ListView<Student>, ListCell<Student>>() 
-        {
-            @Override 
-            public ListCell<Student> call(ListView<Student> p) 
-            {
-                return new ListCell<Student>() 
-                {
-                                 
-                    @Override 
-                    protected void updateItem(Student stu, boolean empty) 
-                    {
-                        super.updateItem(stu, empty);
-
-                        if (stu != null) 
-                        {
-                            setText(stu.getName().trim());
-                        } 
-                        else 
-                        {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
         
-        boxCourse.setCellFactory(new Callback<ListView<Course>, ListCell<Course>>() 
-        {
-            @Override 
-            public ListCell<Course> call(ListView<Course> p) 
-            {
-                return new ListCell<Course>() 
-                {
-                                 
-                    @Override 
-                    protected void updateItem(Course course, boolean empty) 
-                    {
-                        super.updateItem(course, empty);
-
-                        if (course != null) 
-                        {
-                            setText(course.getCourseName().trim());
-                        } 
-                        else 
-                        {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
+        boxStu.setCellFactory(listView -> new StudentListCell());
         
-        boxInstruc.setCellFactory(new Callback<ListView<Instructor>, ListCell<Instructor>>() 
-        {
-            @Override 
-            public ListCell<Instructor> call(ListView<Instructor> p) 
-            {
-                return new ListCell<Instructor>() 
-                {
-                                 
-                    @Override 
-                    protected void updateItem(Instructor ins, boolean empty) 
-                    {
-                        super.updateItem(ins, empty);
-
-                        if (ins != null) 
-                        {
-                            setText(ins.getTitle().trim());
-                        } 
-                        else 
-                        {
-                            setText(null);
-                        }
-                    }
-                };
-            }
-        });
+        boxCourse.setCellFactory(listView -> new CourseListCell());
         
-        //Event handlers which ensures value displayed in box upon selection 
-        //is the name of the object (Student/Course/Instructor)
+        boxInstruc.setCellFactory(listView -> new InstructorListCell());
+        
+        //Event handlers which ensures value displayed in box upon selection is the name of the object (Student/Course/Instructor)
         //Otherwise the box would attempt to display the address of the instance object
-        //***********Written By Chris Torchia***********
+        //List Cell classes defined below so that they could be used for both Cell Factory and Button Cells
+        
         boxStu.setOnAction(e ->
         {
-            boxStu.setButtonCell(new ListCell<Student>()
-            {
-                @Override
-                protected void updateItem(Student stu, boolean empty)
-                {
-                    super.updateItem(stu, empty);
-                    if(stu != null) 
-                    {                
-                        setText(stu.getName());
-                    }
-                }
-            });
+            boxStu.setButtonCell(new StudentListCell());
         });
+        
         boxCourse.setOnAction(e ->
         {
-            boxCourse.setButtonCell(new ListCell<Course>()
-            {
-                @Override
-                protected void updateItem(Course course, boolean empty)
-                {
-                    super.updateItem(course, empty);
-                    if(course != null) 
-                    {                
-                        setText(course.getCourseName());
-                    }
-                }
-            });
+            boxCourse.setButtonCell(new CourseListCell());
         });
+        
         boxInstruc.setOnAction(e ->
         {
-            boxInstruc.setButtonCell(new ListCell<Instructor>()
-            {
-                @Override
-                protected void updateItem(Instructor ins, boolean empty)
-                {
-                    super.updateItem(ins, empty);
-                    if(ins != null) 
-                    {                
-                        setText(ins.getTitle());
-                    }
-                }
-            });
+            boxInstruc.setButtonCell(new InstructorListCell());
         });
     }
     
     public void addStuToCourse()
     {
-        
+        //Gets instance object in observable list at selected index
         Student stu = olStu.get(boxStu.getSelectionModel().getSelectedIndex());
         Course course = olCourse.get(boxCourse.getSelectionModel().getSelectedIndex());
         
-        //Attempts to add a Student to a course
-        //If there is sufficent capacity, returns true
-        boolean result = course.enrollStudentWithCheck(stu);
-        if(result)
+        //Attempts to add a Student to a course, returns an int based on result
+        int result = course.enrollStudentWithNewCheck(stu);
+        switch(result)
         {
-            txtOut.clear();
-            txtOut.appendText(String.format("%nSuccessfully Added Student to:%n"));
-            txtOut.appendText(String.format("%n%s%n",course.toString()));
-            txtOut.appendText(String.format("%nUpdated Roster:%n%s%n",course.getRoster()));
+            case 0: //Student already enrolled in course
+                txtOut.clear();
+                txtOut.appendText(String.format("%nUnable to add Student: Student Already Enrolled in Course!%n"));
+                txtOut.appendText(String.format("%n%s%n",course.toString()));
+                txtOut.appendText(String.format("%nCourse Roster:%n%s%n",course.getRoster()));
+                break;
+            case 1: //Course already at maximum capacity
+                txtOut.clear();
+                txtOut.appendText(String.format("%nUnable to add Student: course is at maximum capacity!%n"));
+                txtOut.appendText(String.format("%n%s%n",course.toString()));
+                txtOut.appendText(String.format("%nCourse Roster:%n%s%n",course.getRoster()));
+                break;
+            case 2: //Student successfully enrolled
+                txtOut.clear();
+                txtOut.appendText(String.format("%nSuccessfully Added Student to:%n"));
+                txtOut.appendText(String.format("%n%s%n",course.toString()));
+                txtOut.appendText(String.format("%nUpdated Roster:%n%s%n",course.getRoster()));
+                break;
         }
-        else
-        {
-            txtOut.clear();
-            txtOut.appendText(String.format("%nUnable to add Student: course is at maximum capacity!%n"));
-            txtOut.appendText(String.format("%n%s%n",course.toString()));
-            txtOut.appendText(String.format("%nCourse Roster:%n%s%n",course.getRoster()));
-        }
+        boxStu.getSelectionModel().clearSelection();
+        boxCourse.getSelectionModel().clearSelection();
+        boxInstruc.getSelectionModel().clearSelection();
     }
             
     public void removeStuFromCourse()
     {
+        //Gets instance object in observable list at selected index
         Student stu = olStu.get(boxStu.getSelectionModel().getSelectedIndex());
         Course course = olCourse.get(boxCourse.getSelectionModel().getSelectedIndex());
+        
+        //Attempts to remove student from course, method returns true if successful
         boolean result = course.removeStudent(stu.getStudentID());
         if(result)
         {
@@ -505,17 +425,29 @@ public class Application_FX extends Application
             txtOut.appendText(String.format("%n%s%n",course.toString()));
             txtOut.appendText(String.format("%nCourse Roster:%n%s%n",course.getRoster()));
         }
+        boxStu.getSelectionModel().clearSelection();
+        boxCourse.getSelectionModel().clearSelection();
+        boxInstruc.getSelectionModel().clearSelection();
     }
     
     public void addInstructorToCourse()
     {
+        //Gets instance object in observable list at selected index
         Instructor ins = olInstruc.get(boxInstruc.getSelectionModel().getSelectedIndex());
         Course course = olCourse.get(boxCourse.getSelectionModel().getSelectedIndex());
+        
         course.assignInstructor(ins);
+        
         txtOut.clear();
         txtOut.appendText(String.format("%nSuccessfully assigned instructor: %s to course: %s%n",
                 ins.getTitle(),course.getCourseName()));
+        
+        boxStu.getSelectionModel().clearSelection();
+        boxCourse.getSelectionModel().clearSelection();
+        boxInstruc.getSelectionModel().clearSelection();
     }
+    
+    //---------------Object Creation Methods---------------
     
     public void addStu()
     {
@@ -720,30 +652,65 @@ public class Application_FX extends Application
             txtInstrucMail.clear();
         }
     }
-            
-    public void sendDBCommand(String sqlQuery)
+    
+    //----------ListCell Class Definitions----------
+    //-----------Written by Chris Torchia-----------
+    private static class InstructorListCell extends ListCell<Instructor>
     {
-        String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "javauser"; 
-        String userPASS = "javapass";
-        OracleDataSource ds;
-        
-        System.out.println(sqlQuery);
-        
-        try
+        @Override 
+        protected void updateItem(Instructor ins, boolean empty) 
         {
-            ds = new OracleDataSource();
-            ds.setURL(URL);
-            dbConn = ds.getConnection(userID,userPASS);
-            commStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            dbResults = commStmt.executeQuery(sqlQuery);
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e.toString());
+            super.updateItem(ins, empty);
+
+            if (ins != null) 
+            {
+                setText(ins.getTitle().trim());
+            } 
+            else 
+            {
+                setText(null);
+            }
         }
     }
-            
+    
+    private static class StudentListCell extends ListCell<Student>
+    {
+        @Override 
+        protected void updateItem(Student stu, boolean empty) 
+        {
+            super.updateItem(stu, empty);
+
+            if (stu != null) 
+            {
+                setText(stu.getName().trim());
+            } 
+            else 
+            {
+                setText(null);
+            }
+        }
+    }
+    
+    private static class CourseListCell extends ListCell<Course>
+    {
+        @Override 
+        protected void updateItem(Course course, boolean empty) 
+        {
+            super.updateItem(course, empty);
+
+            if (course != null) 
+            {
+                setText(course.getCourseName().trim());
+            } 
+            else 
+            {
+                setText(null);
+            }
+        }
+    }
+    
+    //----------DBMS Processing Methods----------
+    //DBMS processing code written by Tran Le and Chris Torchia
     public void importStudents()
     {
         String sqlQuery = "SELECT * FROM JAVAUSER.STUDENT";
@@ -765,7 +732,6 @@ public class Application_FX extends Application
         {
             txtOut.setText(sqle.toString());
         }
-        
     }
     
     public void saveToDB()
@@ -809,7 +775,30 @@ public class Application_FX extends Application
             }
         }
     }
-
+    
+    public void sendDBCommand(String sqlQuery)
+    {
+        String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+        String userID = "javauser"; 
+        String userPASS = "javapass";
+        OracleDataSource ds;
+        
+        System.out.println(sqlQuery);
+        
+        try
+        {
+            ds = new OracleDataSource();
+            ds.setURL(URL);
+            dbConn = ds.getConnection(userID,userPASS);
+            commStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            dbResults = commStmt.executeQuery(sqlQuery);
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.toString());
+        }
+    }
+    
     public void stop()
     {
         saveToDB();                
