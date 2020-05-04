@@ -38,7 +38,7 @@ public class Student {
         nextStudentID++;        
     }   
     
-    public Student(int StudentID, String name, int year, String studentMajor, double GPA, 
+    public Student(int studentID, String name, int year, String studentMajor, double GPA, 
             String studentEmail){
         setStudentName(name);
         setStudentYear(year);
@@ -141,6 +141,27 @@ public class Student {
     
     public String getStudentYear(){
         return this.studentYear;
+    }
+    
+    public int getStudentYearNumber(){
+        switch(this.studentYear)
+        {
+            case "Freshman":
+                return 0;
+            case "Sophomore":
+                return 1;
+            case "Junior":
+                return 2;
+            case "Senior":
+                return 3;
+            default:
+                return 4;     
+        }
+    }
+    
+    public String getStudentEmail()
+    {
+        return this.studentEmail;
     }
     
     public String getStudentMajor(){

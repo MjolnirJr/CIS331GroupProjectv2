@@ -133,7 +133,7 @@ public class Application_FX extends Application
         GridPane tablePane = new GridPane();
         GridPane overallPane = new GridPane();
         
-        // Add controls to Student Pane
+        // Add controls and formatting to Student Pane
         addStuPane.setAlignment(Pos.TOP_CENTER);
         addStuPane.getColumnConstraints().add(new ColumnConstraints(50));
         addStuPane.add(lblAddStu, 0,0,2,1);
@@ -150,7 +150,7 @@ public class Application_FX extends Application
         addStuPane.add(btnAddStu, 1, 6);
         addStuPane.setPadding(new Insets(10));
         
-        // Add controls to Course Pane
+        // Add controls and formatting to Course Pane
         addCoursePane.setAlignment(Pos.TOP_CENTER);
         addCoursePane.getColumnConstraints().add(new ColumnConstraints(85));
         addCoursePane.add(lblAddCourse, 0, 0, 2, 1);
@@ -165,7 +165,7 @@ public class Application_FX extends Application
         addCoursePane.add(btnAddCourse, 1, 5);
         addCoursePane.setPadding(new Insets(10));
         
-        // Add controls to Instructor Pane
+        // Add controls and formatting to Instructor Pane
         addInstrucPane.setAlignment(Pos.TOP_CENTER);
         addCoursePane.getColumnConstraints().add(new ColumnConstraints(100));
         addInstrucPane.add(lblAddInstruc, 0, 0, 2, 1);
@@ -182,7 +182,7 @@ public class Application_FX extends Application
         addInstrucPane.add(btnAddInstruc, 1, 6);
         addInstrucPane.setPadding(new Insets(10));
         
-        // Add controls to Build Course Pane
+        // Add controls and formatting to Build Course Pane
         buildCoursePane.setAlignment(Pos.CENTER_LEFT);
         buildCoursePane.getColumnConstraints().add(new ColumnConstraints(100));
         buildCoursePane.add(lblBuildCourse, 0, 0, 2, 1);
@@ -242,7 +242,10 @@ public class Application_FX extends Application
         primaryStage.setTitle("ShenandoahU Student Management System");
         primaryStage.setScene(primaryScene);
         primaryStage.show();
-
+        
+        //Import Students from Database
+        importStudents();
+        
         // Disable ComboBox 
         boxInstruc.setDisable(true);
         
@@ -725,6 +728,8 @@ public class Application_FX extends Application
         String userPASS = "javapass";
         OracleDataSource ds;
         
+        System.out.println(sqlQuery);
+        
         try
         {
             ds = new OracleDataSource();
@@ -738,20 +743,76 @@ public class Application_FX extends Application
             System.out.println(e.toString());
         }
     }
-    
-    public void readDB()
+            
+    public void importStudents()
     {
+        String sqlQuery = "SELECT * FROM JAVAUSER.STUDENT";
+        sendDBCommand(sqlQuery);
+        
+        String outputString = "";
+        try
+        {            
+            while (dbResults.next())
+            {
+                Student stu = new Student(dbResults.getInt(1),dbResults.getString(2).trim(),
+                    dbResults.getInt(3),dbResults.getString(4).trim(),dbResults.getDouble(5),
+                        dbResults.getString(6).trim());
+                studentArray.add(stu);
+                olStu.add(stu);                
+            }
+        }
+        catch (SQLException sqle)
+        {
+            txtOut.setText(sqle.toString());
+        }
         
     }
     
     public void saveToDB()
     {
-        
+        String query = "";
+        for (Course course : courseArray)
+        {
+            query = "INSERT INTO JAVAUSER.COURSE "
+                    + "(COURSEID,COURSENAME,COURSEBLDG,COURSEROOM,COURSECAPACITY) VALUES (";
+            query += course.getCourseID() + "," + "'" + course.getCourseName() + "'" + ",";
+            query += "'" + course.getCourseBldg() + "'" + "," + "'" + course.getCourseRoom() + "'" + ",";
+            query += "'" + course.getCapacity() + "')";
+            sendDBCommand(query);
+        }
+        for (Student stu : studentArray)
+        {
+            query = "INSERT INTO JAVAUSER.STUDENT "
+                    + "(STUDENTID,STUDENTNAME,STUDENTYEAR,STUDENTMAJOR,STUDENTGPA,STUDENTEMAIL) VALUES (";
+            query += stu.getStudentID() + "," + "'" + stu.getName() + "'" + ",";
+            query += stu.getStudentYearNumber()+ "," + "'" + stu.getStudentMajor() + "'" + ",";
+            query += stu.getGPA() + "," + "'" + stu.getStudentEmail() + "')";
+            sendDBCommand(query);
+        }
+        for (Instructor ins : instructorArray)
+        {
+            query = "INSERT INTO JAVAUSER.INSTRUCTOR "
+                    + "(INSTRID,INSTRNAME,INSTRPREFIX,INSTROFFICE,INSTRDEPT,INSTREMAIL) VALUES (";
+            query += ins.getInsID() + "," + "'" + ins.getName() + "'" + ",";
+            query += "'" + ins.getPrefix() + "'" + "," + "'" + ins.getOffice() + "'" + ",";
+            query += "'" + ins.getDepartment() + "'" + "," + "'" + ins.getEmail() + "')";
+            sendDBCommand(query);
+        }
+        for(Course course : courseArray)
+        {
+            for(Student stu : course.getEnrollment())
+            {
+                query = "INSERT INTO JAVAUSER.STUDENTENROLLMENT "
+                    + "(COURSEID,STUDENTID) VALUES (";
+                query += course.getCourseID() + "," + stu.getStudentID() + ")";
+                sendDBCommand(query);
+            }
+        }
     }
 
     public void stop()
     {
-                
+        saveToDB();                
     }  
     
     public static void main(String[] args) {
