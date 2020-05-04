@@ -112,6 +112,26 @@ public class Course {
         return this.courseID;
     }
     
+    public String getCourseBldg()
+    {
+        return this.courseBuilding;
+    }
+    
+    public String getCourseRoom()
+    {
+        return this.courseBldgRoom;
+    }
+    
+    public int getCapacity()
+    {
+        return this.courseCapacity;
+    }
+    
+    public ArrayList<Student> getEnrollment()
+    {
+        return this.enrolledStudents;
+    }
+    
     //Returns string containing info about a given course, if an Instructor is assigned to the course
     //It adds instructor title to the output, otherwise it shows "No Instructor Assigned"
     public String toString()
@@ -149,7 +169,9 @@ public class Course {
             return false;
         }
         else
+        {
             System.out.println(this.getRoster());
             return true;
+        }
     }
 }

@@ -52,6 +52,11 @@ public class Instructor {
         nextInstructID++;        
     }
     
+    public int getInsID()
+    {
+        return this.instructorID;
+    }
+    
     public void setName(String name)
     {
         this.name = name;
@@ -94,6 +99,31 @@ public class Instructor {
     {
         //Returns instructor title as a formatted string consisting of Prefix + Name
         return (this.prefix + " " + this.name);
+    }
+    
+    public String getName()
+    {
+        return this.name;
+    }
+    
+    public String getDepartment()
+    {
+        return this.department;
+    }
+    
+    public String getEmail()
+    {
+        return this.email;
+    }
+    
+    public String getOffice()
+    {
+        return this.officeLocation;
+    }
+    
+    public String getPrefix()
+    {
+        return this.prefix;
     }
     
     public String toString()
