@@ -730,8 +730,8 @@ public class Application_FX extends Application
         }
         catch (SQLException sqle)
         {
-            txtOut.setText(sqle.toString());
-        }
+            //txtOut.setText(sqle.toString());
+        }    
     }
     
     public void saveToDB()
@@ -783,7 +783,7 @@ public class Application_FX extends Application
         String userPASS = "javapass";
         OracleDataSource ds;
         
-        System.out.println(sqlQuery);
+        //System.out.println(sqlQuery);
         
         try
         {
@@ -795,7 +795,7 @@ public class Application_FX extends Application
         }
         catch (SQLException e)
         {
-            System.out.println(e.toString());
+            //System.out.println(e.toString());
         }
     }
     

@@ -25,7 +25,18 @@ public class Student {
     private String studentEmail;
     private double GPA;
     private int studentID;
-    private static int nextStudentID = 200000;
+    private static int nextStudentID = 200000;   
+    
+    public Student(int studentID, String name, int year, String studentMajor, double GPA, 
+            String studentEmail){
+        this.studentID = studentID;
+        setStudentName(name);
+        setStudentYear(year);
+        this.studentMajor = studentMajor;
+        this.GPA = GPA;
+        this.studentEmail = studentEmail;
+        nextStudentID = this.studentID + 1;        
+    }
      
     public Student(String name, int year, String studentMajor, double GPA, 
             String studentEmail){
@@ -36,24 +47,13 @@ public class Student {
         this.studentEmail = studentEmail;
         this.studentID = nextStudentID;
         nextStudentID++;        
-    }   
-    
-    public Student(int studentID, String name, int year, String studentMajor, double GPA, 
-            String studentEmail){
-        setStudentName(name);
-        setStudentYear(year);
-        this.studentMajor = studentMajor;
-        this.GPA = GPA;
-        this.studentEmail = studentEmail;
-        this.studentID = studentID;
-        nextStudentID = this.studentID++;        
     }
     
     public Student(){
         this.studentID = nextStudentID;
         nextStudentID++;
     }
-    
+        
     public void setStudentName(String name){
         if(name.contains(" "))
         {
