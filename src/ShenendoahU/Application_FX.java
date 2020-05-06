@@ -510,14 +510,14 @@ public class Application_FX extends Application
             if (convertGPA < 0 || convertGPA > 5)
             {
                 txtStuGPA.clear();
-                txtOut.appendText(String.format("%nPlease enter a valid GPa between 0 and 5%n"));
+                txtOut.appendText(String.format("%nPlease enter a valid GPA between 0 and 5%n"));
                 execute = false;
             }
         } 
         catch(InputMismatchException e) 
         {
             txtStuGPA.clear();
-            txtOut.appendText(String.format("%nPlease enter a valid GPa between 0 and 5%n"));
+            txtOut.appendText(String.format("%nPlease enter a valid GPA between 0 and 5%n"));
             execute = false;
         }
         
@@ -657,7 +657,7 @@ public class Application_FX extends Application
         if (execute)
         {
             txtOut.clear();
-            String stringPre = boxPrefix.getSelectionModel().getSelectedItem().toString(); //needs some reworking
+            String stringPre = boxPrefix.getSelectionModel().getSelectedItem().toString(); 
             Instructor ins = new Instructor(txtInstrucName.getText(), stringPre,
                     txtOffice.getText(), txtDepartment.getText(), txtInstrucMail.getText());
             instructorArray.add(ins);
