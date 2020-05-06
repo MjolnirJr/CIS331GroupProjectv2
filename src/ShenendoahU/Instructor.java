@@ -12,7 +12,7 @@
                   and will initalize email via "setEmailWithCheck() method to allow for data entry validation
  */
 
-// ******** Student Instructor written by Thomas Knupp ************
+// ******** Instructor Class written by Thomas Knupp ************
 
 package ShenendoahU;
 public class Instructor {
