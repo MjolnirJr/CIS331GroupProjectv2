@@ -1,10 +1,24 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Project Authors: Vincent Hoang, Thomas Knupp, Tran Le, Jom Zeng, Chris Torchia
+ * Date: 05/06/20
+ * Assignment: Final Project - ShenendoahU - Part 2
+ * Project Purpose: Desktop Applciation for Shenendoah U to manage course registration including 
+                    course creation, student registration/removal, instructor assignment and roster creation.
+                    This will minimize effort, errors, and redundancy, and allow for easy expansion and
+                    training of the Registrar’s team.
+
+ * Class Purpose: JavaFX application class which handles the primary processing logic for the overall application
+                  as well as the JavaFX UI functionality and layout and connection to Oracle SQL*Plus database.
  */
+
+//JavaFX design/layout/object definitions written by Jom Zeng and Thomas Knupp
+//Course modification code written by Chris Torchia
+//Object creation code written by Vincent Hoang
+//DBMS processing code written by Tran Le
+
 package ShenendoahU;
 
+//JavaFX import
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.scene.Scene;
@@ -24,10 +38,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 
-/**
- *
- * @author hoang
- */
 public class Application_FX extends Application 
 {
     //Initialize Database Connection Objects    
@@ -108,6 +118,8 @@ public class Application_FX extends Application
         //System.out.println("test\n");
         //Read exisiting students in from Database
         importStudents();
+        
+        //----------JavaFX Definitions and Initialization----------
         
         //Pre-populate ComboBox for Student, Course, Instructor
         boxStuYear.getItems().addAll(
@@ -268,7 +280,7 @@ public class Application_FX extends Application
             }             
         });
         
-         // Lambda Event for adding new Student
+        //Lambda Event for adding new Student
         btnAddStu.setOnAction(e -> 
         {
            addStu();
@@ -285,6 +297,9 @@ public class Application_FX extends Application
         {
             addInstructor();
         });
+        
+        //----------Course Modification Button Logic----------
+        //-------------Written by Chris Torchia---------------
         
         //Lambda Event for "Update Course" Button
         //Events change based on the selections of Add/Remove Student radio buttons and Add Instructor check box
@@ -334,7 +349,7 @@ public class Application_FX extends Application
                 }
                 else
                 {
-                    txtOut.appendText(String.format("%nPlease Select a Course and Instructor to Continue%n"));
+                    txtOut.appendText(String.format("%nPlease Select a Course and Student to Continue%n"));
                 }
             }
         });
@@ -342,7 +357,6 @@ public class Application_FX extends Application
         //Lambda Expressions for Cell Factory Initialization allowing for comboboxes to 
         //a contain list of objects but only display the object names
         //List Cell classes defined below so that they could be used for both Cell Factory and Button Cells
-        //***********Written By Chris Torchia***********
         
         boxStu.setCellFactory(listView -> new StudentListCell());
         
@@ -370,6 +384,8 @@ public class Application_FX extends Application
         });
     }
     
+    //----------Course Modification Methods----------
+    //-----------Written by Chris Torchia------------
     public void addStuToCourse()
     {
         //Gets instance object in observable list at selected index
@@ -449,7 +465,7 @@ public class Application_FX extends Application
     }
     
     //---------------Object Creation Methods---------------
-    
+    //--------------Written by Vincent Hoang---------------
     public void addStu()
     {
         //Error checking code to make sure that user has input all necessary information
@@ -711,7 +727,7 @@ public class Application_FX extends Application
     }
     
     //----------DBMS Processing Methods----------
-    //DBMS processing code written by Tran Le and Chris Torchia
+    //DBMS processing code written by Tran Le
     public void importStudents()
     {
         String sqlQuery = "SELECT * FROM JAVAUSER.STUDENT";
@@ -780,11 +796,11 @@ public class Application_FX extends Application
     public void sendDBCommand(String sqlQuery)
     {
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "JAVAUSER"; 
-        String userPASS = "JAVAPASS";
+        String userID = "javauser"; 
+        String userPASS = "javapass";
         OracleDataSource ds;
         
-        //System.out.println(sqlQuery);
+        System.out.println(sqlQuery);
         
         try
         {
@@ -796,7 +812,7 @@ public class Application_FX extends Application
         }
         catch (SQLException e)
         {
-            //System.out.println(e.toString());
+            System.out.println(e.toString());
         }
     }
     

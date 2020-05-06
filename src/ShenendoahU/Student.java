@@ -1,7 +1,7 @@
 /*
  * Project Authors: Vincent Hoang, Thomas Knupp, Tran Le, Jom Zeng, Chris Torchia
- * Date: 04/26/20
- * Assignment: HW 7 - ShenendoahU
+ * Date: 05/06/20
+ * Assignment: Final Project - ShenendoahU - Part 2
  * Project Purpose: Desktop Applciation for Shenendoah U to manage course registration including 
                     course creation, student registration/removal, instructor assignment and roster creation.
                     This will minimize effort, errors, and redundancy, and allow for easy expansion and
