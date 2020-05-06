@@ -12,8 +12,8 @@
  */
 
 //JavaFX design/layout/object definitions written by Jom Zeng and Thomas Knupp
-//Course modification code written by Chris Torchia
-//Object creation code written by Vincent Hoang
+//Course modification code/processing logic written by Chris Torchia
+//Object creation code/processing logic written by Vincent Hoang
 //DBMS processing code written by Tran Le
 
 package ShenendoahU;
